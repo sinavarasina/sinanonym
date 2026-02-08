@@ -13,14 +13,14 @@ this document describe the project structure for the project would be as tghe pr
 ```
 sinanonym
 ├── docs/               # for documentation/markdown
+├── node_modules/
+├── public/             # folder contains static files that are served directly to the browser
+├── src/                # react code
 ├── eslint.config.js
 ├── index.html
-├── node_modules
 ├── package.json
 ├── package-lock.json
-├── public/             # folder contains static files that are served directly to the browser
 ├── README.md
-├── src/                # react code
 ├── tsconfig.app.json
 ├── tsconfig.json
 ├── tsconfig.node.json
