@@ -33,8 +33,11 @@ export const Home = () => {
         className={styles.headerContainer}
         style={{ flexDirection: "row" }}
       >
-        <img src={yuki} alt="waifu" className={styles.avatar} />
-        <h1 className={styles.title}>Sinanonym Homepage</h1>
+        <div className={styles.avatarWrapper}>
+          <div className={styles.ring}></div>
+          <img src={yuki} alt="waifu" className={styles.avatar} />
+        </div>
+        <h1 className={styles.title}>Sinanonym</h1>
       </header>
 
       <section className={styles.bio}>
