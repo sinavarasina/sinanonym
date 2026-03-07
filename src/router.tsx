@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { appRoutes } from "./config/routes";
 import { NotFound } from "./pages/NotFound/NotFound";
+import WIPAnimation from "./assets/images/anone.gif";
 
 const routerObjects = appRoutes.map((route) => {
   if (route.isWIP) {
@@ -10,6 +11,7 @@ const routerObjects = appRoutes.map((route) => {
         <NotFound
           title={`Page ${route.path} is WIP`}
           message="This sector is currently under construction. Please check back later."
+          image={WIPAnimation}
         />
       ),
     };
