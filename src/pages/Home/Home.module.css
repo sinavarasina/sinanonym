@@ -1,0 +1,88 @@
+.hero {
+  min-height: 100vh;
+  background-color: var(--ctp-mocha-base);
+  color: var(--ctp-mocha-text);
+  font-family: "JetBrains Mono", "Fira Code", "Courier New", Courier, monospace;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.avatar {
+  height: 100px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: var(--ctp-mocha-mauve);
+  text-shadow: 2px 2px 0px var(--ctp-mocha-crust);
+  margin: 0;
+}
+
+.bio {
+  width: 100%;
+  max-width: 600px;
+  text-align: left;
+  color: var(--ctp-mocha-subtext0);
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+.bio p {
+  margin-bottom: 0.8rem;
+}
+
+.terminal {
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--ctp-mocha-mantle);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--ctp-mocha-surface0);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.terminal p:first-child {
+  color: var(--ctp-mocha-sapphire);
+  margin-bottom: 0.8rem;
+  font-weight: bold;
+}
+
+.menuContainer {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.menuContainer > span:first-child {
+  color: var(--ctp-mocha-maroon);
+  font-weight: bold;
+}
+
+.menuItem {
+  color: var(--ctp-mocha-overlay1);
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.15s ease-in-out;
+}
+
+.menuItem:hover,
+.active {
+  color: var(--ctp-mocha-green);
+  font-weight: bold;
+}
