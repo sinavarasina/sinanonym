@@ -11,12 +11,14 @@
   text-align: center;
 }
 
-.img {
+.anim {
   max-width: 300px;
   border-radius: 8px;
   margin-bottom: 2rem;
   opacity: 0.8;
   filter: grayscale(20%);
+  pointer-events: none;
+  background: transparent;
 }
 
 .title {
