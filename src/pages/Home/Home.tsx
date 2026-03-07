@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./Home.module.css";
 import yuki from "../../assets/images/yuki-background-removed.png";
 import yukiGlassesOn from "../../assets/images/yuki-background-removed-glasses.png";
+import { useRNGYukiSFX } from "../../hooks/useRNGYukiSound";
 
 const MENU_ITEMS = ["/home", "/gallery", "/fun-things", "/about-me"];
 const ROTATING_TEXT =
@@ -9,6 +10,7 @@ const ROTATING_TEXT =
 
 export const Home = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const { playRandomYukiSFX } = useRNGYukiSFX();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -33,7 +35,7 @@ export const Home = () => {
   return (
     <main className={styles.hero}>
       <header className={styles.headerContainer}>
-        <div className={styles.avatarWrapper}>
+        <div className={styles.avatarWrapper} onClick={playRandomYukiSFX}>
           <svg viewBox="0 0 200 200" className={styles.textRing}>
             <defs>
               <path
