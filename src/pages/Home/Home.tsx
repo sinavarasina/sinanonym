@@ -53,14 +53,15 @@ export const Home = () => {
         <div className={styles.menuContainer}>
           <span>&gt; </span>
           {MENU_ITEMS.map((item, index) => (
-            <span
+            <button
               key={item}
               className={`${styles.menuItem} ${index === selectedIndex ? styles.active : ""}`}
               onMouseEnter={() => setSelectedIndex(index)}
               onClick={() => console.log(`move to: ${item}`)}
+              aria-current={index === selectedIndex ? "true" : undefined}
             >
               {item}
-            </span>
+            </button>
           ))}
         </div>
       </section>

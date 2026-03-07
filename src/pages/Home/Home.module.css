@@ -97,6 +97,11 @@
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
   transition: all 0.15s ease-in-out;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
 }
 
 .menuItem:hover,
