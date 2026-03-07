@@ -24,15 +24,33 @@
   height: 110px;
 }
 
-.ring {
+.textRing {
   position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 2px dashed color-mix(in srgb, var(--ctp-mocha-mauve) 70%, transparent);
-  animation: ringSpin 120s linear infinite;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 200px;
+  height: 200px;
+  animation: ringSpin 20s linear infinite;
+  transition: all 0.3s ease-in-out;
+  z-index: 1;
 }
 
-.avatar {
+.ringText {
+  fill: var(--ctp-mocha-mauve);
+  font-size: 11px;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.avatarWrapper:hover .textRing {
+  scale: 1.2;
+  filter: drop-shadow(0 0 8px var(--ctp-mocha-mauve));
+}
+
+.avatarBase,
+.avatarHover {
   position: absolute;
   inset: 0;
   margin: auto;
@@ -40,6 +58,20 @@
   height: 95px;
   object-fit: cover;
   border-radius: 50%;
+  z-index: 2;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.avatarHover {
+  opacity: 0;
+}
+
+.avatarWrapper:hover .avatarBase {
+  opacity: 0;
+}
+
+.avatarWrapper:hover .avatarHover {
+  opacity: 1;
 }
 
 .title {
@@ -112,6 +144,6 @@
 
 @keyframes ringSpin {
   to {
-    transform: rotate(360deg);
+    rotate: 360deg;
   }
 }

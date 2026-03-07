@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import styles from "./Home.module.css";
-import yuki from "../../assets/yuki-background removed.png";
+import yuki from "../../assets/yuki-background-removed.png";
+import yukiGlassesOn from "../../assets/yuki-background-removed-glasses.png";
 
 const MENU_ITEMS = ["/home", "/hobby", "/about"];
+const ROTATING_TEXT =
+  "< observing the resulting fluctuations in data > • 長門有希 •";
 
 export const Home = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -29,14 +32,30 @@ export const Home = () => {
 
   return (
     <main className={styles.hero}>
-      <header
-        className={styles.headerContainer}
-        style={{ flexDirection: "row" }}
-      >
+      <header className={styles.headerContainer}>
         <div className={styles.avatarWrapper}>
-          <div className={styles.ring}></div>
-          <img src={yuki} alt="waifu" className={styles.avatar} />
+          <svg viewBox="0 0 200 200" className={styles.textRing}>
+            <defs>
+              <path
+                id="circlePath"
+                d="M 100, 100 m -80, 0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0"
+              />
+            </defs>
+            <text className={styles.ringText}>
+              <textPath href="#circlePath" startOffset="0%">
+                {ROTATING_TEXT}
+              </textPath>
+            </text>
+          </svg>
+
+          <img src={yuki} alt="waifu base" className={styles.avatarBase} />
+          <img
+            src={yukiGlassesOn}
+            alt="waifu glasses"
+            className={styles.avatarHover}
+          />
         </div>
+
         <h1 className={styles.title}>Sinanonym</h1>
       </header>
 
