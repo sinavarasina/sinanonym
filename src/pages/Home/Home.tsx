@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import styles from "./Home.module.css";
-import yuki from "../../assets/yuki-background-removed.png";
-import yukiGlassesOn from "../../assets/yuki-background-removed-glasses.png";
+import yuki from "../../assets/images/yuki-background-removed.png";
+import yukiGlassesOn from "../../assets/images/yuki-background-removed-glasses.png";
 
-const MENU_ITEMS = ["/home", "/hobby", "/about"];
+const MENU_ITEMS = ["/home", "/gallery", "/fun-things", "/about-me"];
 const ROTATING_TEXT =
   "< observing the resulting fluctuations in data > • 長門有希 •";
 
