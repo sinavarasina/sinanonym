@@ -1,0 +1,51 @@
+.container {
+  min-height: 100vh;
+  background-color: var(--ctp-mocha-base);
+  color: var(--ctp-mocha-text);
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.img {
+  max-width: 300px;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  opacity: 0.8;
+  filter: grayscale(20%);
+}
+
+.title {
+  font-size: 2rem;
+  color: var(--ctp-mocha-red);
+  margin-bottom: 0.5rem;
+}
+
+.message {
+  color: var(--ctp-mocha-subtext0);
+  margin-bottom: 2rem;
+  max-width: 400px;
+  line-height: 1.5;
+}
+
+.backButton {
+  background: transparent;
+  color: var(--ctp-mocha-blue);
+  border: 1px solid var(--ctp-mocha-surface1);
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.backButton:hover {
+  background-color: var(--ctp-mocha-surface0);
+  color: var(--ctp-mocha-sky);
+  border-color: var(--ctp-mocha-blue);
+}
