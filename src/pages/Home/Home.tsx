@@ -1,16 +1,24 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Home.module.css";
 import yuki from "../../assets/images/yuki-background-removed.png";
 import yukiGlassesOn from "../../assets/images/yuki-background-removed-glasses.png";
 import { useRNGYukiSFX } from "../../hooks/useRNGYukiSound";
 
-const MENU_ITEMS = ["/home", "/gallery", "/fun-things", "/about-me"];
+const MENU_ITEMS = [
+  { label: "/home", path: "/home" },
+  { label: "/gallery", path: "/gallery" },
+  { label: "/fun-things", path: "/fun-things" },
+  { label: "/about-me", path: "/about-me" },
+];
+
 const ROTATING_TEXT =
   "< observing the resulting fluctuations in data > • 長門有希 •";
 
 export const Home = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { playRandomYukiSFX } = useRNGYukiSFX();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -23,8 +31,7 @@ export const Home = () => {
           prev < MENU_ITEMS.length - 1 ? prev + 1 : 0,
         );
       } else if (e.key === "Enter") {
-        // let it just print out something atleast for now
-        console.log(`move to: ${MENU_ITEMS[selectedIndex]}`);
+        navigate(MENU_ITEMS[selectedIndex].path);
       }
     };
 
@@ -75,13 +82,15 @@ export const Home = () => {
           <span>&gt; </span>
           {MENU_ITEMS.map((item, index) => (
             <button
-              key={item}
+              key={item.path}
               className={`${styles.menuItem} ${index === selectedIndex ? styles.active : ""}`}
               onMouseEnter={() => setSelectedIndex(index)}
-              onClick={() => console.log(`move to: ${item}`)}
+              onClick={() => {
+                navigate(item.path);
+              }}
               aria-current={index === selectedIndex ? "true" : undefined}
             >
-              {item}
+              {item.label}
             </button>
           ))}
         </div>
