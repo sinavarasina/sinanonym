@@ -37,7 +37,7 @@ export const Home = () => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedIndex]);
+  }, [selectedIndex, navigate]);
 
   return (
     <main className={styles.hero}>
