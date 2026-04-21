@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import styles from "./Home.module.css";
-import yuki from "../../assets/images/yuki-background-removed.png";
-import yukiGlassesOn from "../../assets/images/yuki-background-removed-glasses.png";
+import yuki from "../../assets/images/yuki-background-removed.webp";
+import yukiGlassesOn from "../../assets/images/yuki-background-removed-glasses.webp";
 import { useRNGYukiSFX } from "../../hooks/useRNGYukiSFX";
 import { useCustNavigate } from "../../hooks/useCustNavigate";
 import type { SplashConfig } from "../../types/SplashMedia";
@@ -97,7 +97,7 @@ export const Home = () => {
           hey, i'm Varasina Farmadani, and i was trying to learn how to make
           website (since i skip most of webdev tutorials).
         </p>
-        <p>よろしくお願いします。</p>
+        <p>よろしくお願いします</p>
       </section>
 
       <section className={styles.terminal} aria-label="Navigation terminal">
