@@ -8,6 +8,17 @@ interface SplashMediaProps extends Omit<SplashConfig, "type"> {
   onClose: () => void;
 }
 
+const POSITION_META: Record<
+  MediaPosition,
+  { origin: string; gradient: string }
+> = {
+  center: { origin: "center center", gradient: "center center" },
+  "top-left": { origin: "top left", gradient: "left top" },
+  "top-right": { origin: "top right", gradient: "right top" },
+  "bottom-left": { origin: "bottom left", gradient: "left bottom" },
+  "bottom-right": { origin: "bottom right", gradient: "right bottom" },
+};
+
 export const SplashMedia = ({
   type,
   src,
@@ -21,8 +32,14 @@ export const SplashMedia = ({
   const [isVisible, setIsVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
+  const isCorner = position !== "center";
+
   useEffect(() => {
-    if (!type) return;
+    if (!type) {
+      setIsVisible(false);
+      setIsClosing(false);
+      return;
+    }
     const frame = requestAnimationFrame(() => setIsVisible(true));
     return () => cancelAnimationFrame(frame);
   }, [type]);
@@ -44,43 +61,23 @@ export const SplashMedia = ({
 
   if (!type) return null;
 
-  const getTransformOrigin = () => {
-    if (position === "center") return "center";
-    const v = position.includes("top") ? "top" : "bottom";
-    const h = position.includes("left") ? "left" : "right";
-    return `${v} ${h}`;
-  };
+  const meta = POSITION_META[position];
 
-  const outerStyle: React.CSSProperties = {
-    transform: [
-      position === "center" ? "translate(-50%, -50%)" : "",
-      `translate(${offsetX}, ${offsetY})`,
-      `scale(${scale})`,
-    ]
-      .filter(Boolean)
-      .join(" "),
-    transformOrigin: getTransformOrigin(),
-  };
-
-  const getGradientPosition = (pos: MediaPosition) => {
-    switch (pos) {
-      case "top-left":
-        return "left top";
-      case "top-right":
-        return "right top";
-      case "bottom-left":
-        return "left bottom";
-      case "bottom-right":
-        return "right bottom";
-      case "center":
-        return "center center";
-      default:
-        return "center center";
-    }
-  };
+  const outerStyle: React.CSSProperties = isCorner
+    ? { transform: `translate(${offsetX}, ${offsetY})` }
+    : {
+        transform: [
+          "translate(-50%, -50%)",
+          `translate(${offsetX}, ${offsetY})`,
+          `scale(${scale})`,
+        ]
+          .filter(Boolean)
+          .join(" "),
+        transformOrigin: meta.origin,
+      };
 
   const gradientStyle: React.CSSProperties = {
-    background: `radial-gradient(circle at ${getGradientPosition(position)}, rgba(0, 0, 0, 0.7) 0%, transparent 100%)`,
+    background: `radial-gradient(circle at ${meta.gradient}, rgba(0, 0, 0, 0.7) 0%, transparent 100%)`,
     opacity: isVisible && !isClosing ? 1 : 0,
   };
 

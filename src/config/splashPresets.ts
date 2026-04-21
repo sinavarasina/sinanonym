@@ -6,7 +6,5 @@ export const SPLASH_PRESETS = {
     type: "image",
     src: lelouch,
     position: "bottom-right",
-    scale: 4.3,
-    offsetX: "50px",
   },
 } as const satisfies Record<string, SplashConfig>;
