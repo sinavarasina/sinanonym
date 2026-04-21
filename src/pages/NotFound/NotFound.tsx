@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import styles from "./NotFound.module.css";
 import defaultVid from "../../assets/videos/nazoxkano.webm";
+import { useCustNavigate } from "../../hooks/useCustNavigate";
 
 interface NotFoundProps {
   title?: string;
@@ -13,7 +13,7 @@ export const NotFound = ({
   message = "The directory you are looking for does not exist in this timeline.",
   animVid = defaultVid,
 }: NotFoundProps) => {
-  const navigate = useNavigate();
+  const { goBack } = useCustNavigate();
 
   return (
     <main className={styles.container}>
@@ -29,8 +29,8 @@ export const NotFound = ({
       <h1 className={styles.title}>{title}</h1>
       <p className={styles.message}>{message}</p>
 
-      <button onClick={() => navigate(-1)} className={styles.backButton}>
-        &lt;- Go Back
+      <button onClick={() => goBack()} className={styles.backButton}>
+        Go Back
       </button>
     </main>
   );

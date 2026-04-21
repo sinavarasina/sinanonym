@@ -4,6 +4,7 @@ import styles from "./Home.module.css";
 import yuki from "../../assets/images/yuki-background-removed.png";
 import yukiGlassesOn from "../../assets/images/yuki-background-removed-glasses.png";
 import { useRNGYukiSFX } from "../../hooks/useRNGYukiSound";
+import { useCustNavigate } from "../../hooks/useCustNavigate";
 
 const MENU_ITEMS = [
   { label: "/home", path: "/home" },
@@ -19,6 +20,7 @@ export const Home = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { playRandomYukiSFX } = useRNGYukiSFX();
   const navigate = useNavigate();
+  const { navigateTo } = useCustNavigate();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -31,7 +33,7 @@ export const Home = () => {
           prev < MENU_ITEMS.length - 1 ? prev + 1 : 0,
         );
       } else if (e.key === "Enter") {
-        navigate(MENU_ITEMS[selectedIndex].path);
+        navigateTo(MENU_ITEMS[selectedIndex].path);
       }
     };
 
@@ -79,14 +81,14 @@ export const Home = () => {
       <section className={styles.terminal}>
         <p>$ ls</p>
         <div className={styles.menuContainer}>
-          <span>&gt; </span>
+          <span>{">"}</span>
           {MENU_ITEMS.map((item, index) => (
             <button
               key={item.path}
               className={`${styles.menuItem} ${index === selectedIndex ? styles.active : ""}`}
               onMouseEnter={() => setSelectedIndex(index)}
-              onClick={() => {
-                navigate(item.path);
+              onPointerDown={() => {
+                navigateTo(item.path);
               }}
               aria-current={index === selectedIndex ? "true" : undefined}
             >
