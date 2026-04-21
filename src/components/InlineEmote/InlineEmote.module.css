@@ -1,0 +1,17 @@
+.emote,
+.placeholder {
+  display: inline-block;
+  vertical-align: middle;
+  height: 1.2em;
+  width: auto;
+  margin: 0 0.15em;
+  transform: translateY(-0.1em);
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.placeholder {
+  width: 1.2em;
+  background: transparent;
+}

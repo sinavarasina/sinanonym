@@ -1,6 +1,7 @@
 import styles from "./NotFound.module.css";
 import defaultVid from "../../assets/videos/nazoxkano.webm";
 import { useCustNavigate } from "../../hooks/useCustNavigate";
+import { InlineEmote } from "../../components/InlineEmote/InlineEmote";
 
 interface NotFoundProps {
   title?: string;
@@ -30,7 +31,7 @@ export const NotFound = ({
       <p className={styles.message}>{message}</p>
 
       <button onClick={() => goBack()} className={styles.backButton}>
-        Go Back
+        <InlineEmote name="astil-point2left" size="2em" /> Go Back
       </button>
     </main>
   );
