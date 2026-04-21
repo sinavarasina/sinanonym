@@ -3,7 +3,7 @@ import styles from "./Home.module.css";
 import yuki from "../../assets/images/yuki-background-removed.png";
 import yukiGlassesOn from "../../assets/images/yuki-background-removed-glasses.png";
 
-import { useRNGYukiSFX } from "../../hooks/useRNGYukiSound";
+import { useRNGYukiSFX } from "../../hooks/useRNGYukiSFX";
 import { useCustNavigate } from "../../hooks/useCustNavigate";
 import { SplashMedia } from "../../components/SplashMedia/SplashMedia";
 import { SPLASH_PRESETS } from "../../config/SplashPreset";
