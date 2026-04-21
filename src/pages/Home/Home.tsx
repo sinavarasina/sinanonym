@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./Home.module.css";
 import yuki from "../../assets/images/yuki-background-removed.png";
 import yukiGlassesOn from "../../assets/images/yuki-background-removed-glasses.png";
+
 import { useRNGYukiSFX } from "../../hooks/useRNGYukiSound";
 import { useCustNavigate } from "../../hooks/useCustNavigate";
+import { SplashMedia } from "../../components/SplashMedia/SplashMedia";
+import { SPLASH_PRESETS } from "../../config/SplashPreset";
+import type { SplashConfig } from "../../types/SplashMedia";
 
 const MENU_ITEMS = [
   { label: "/home", path: "/home" },
@@ -18,9 +21,14 @@ const ROTATING_TEXT =
 
 export const Home = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [splashConfig, setSplashConfig] = useState<SplashConfig | null>(null);
+
   const { playRandomYukiSFX } = useRNGYukiSFX();
-  const navigate = useNavigate();
   const { navigateTo } = useCustNavigate();
+
+  const handleSamePageClick = () => {
+    setSplashConfig(SPLASH_PRESETS.samePageClick);
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -33,16 +41,26 @@ export const Home = () => {
           prev < MENU_ITEMS.length - 1 ? prev + 1 : 0,
         );
       } else if (e.key === "Enter") {
-        navigateTo(MENU_ITEMS[selectedIndex].path);
+        navigateTo(MENU_ITEMS[selectedIndex].path, handleSamePageClick);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedIndex, navigate]);
+  }, [selectedIndex, navigateTo]);
 
   return (
     <main className={styles.hero}>
+      <SplashMedia
+        type={splashConfig?.type || null}
+        src={splashConfig?.src || ""}
+        position={splashConfig?.position}
+        scale={splashConfig?.scale}
+        offsetX={splashConfig?.offsetX}
+        offsetY={splashConfig?.offsetY}
+        onClose={() => setSplashConfig(null)}
+      />
+
       <header className={styles.headerContainer}>
         <div className={styles.avatarWrapper} onClick={playRandomYukiSFX}>
           <svg viewBox="0 0 200 200" className={styles.textRing}>
@@ -88,7 +106,7 @@ export const Home = () => {
               className={`${styles.menuItem} ${index === selectedIndex ? styles.active : ""}`}
               onMouseEnter={() => setSelectedIndex(index)}
               onPointerDown={() => {
-                navigateTo(item.path);
+                navigateTo(item.path, handleSamePageClick);
               }}
               aria-current={index === selectedIndex ? "true" : undefined}
             >
