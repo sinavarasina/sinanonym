@@ -18,9 +18,17 @@ export const SplashMedia = ({
   offsetY = "0px",
   onClose,
 }: SplashMediaProps) => {
+  const [isVisible, setIsVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
+  useEffect(() => {
+    if (!type) return;
+    const frame = requestAnimationFrame(() => setIsVisible(true));
+    return () => cancelAnimationFrame(frame);
+  }, [type]);
+
   const triggerClose = useCallback(() => {
+    setIsVisible(false);
     setIsClosing(true);
     setTimeout(() => {
       onClose();
@@ -60,7 +68,9 @@ export const SplashMedia = ({
       style={outerStyle}
     >
       <div
-        className={`${styles.animWrapper} ${isClosing ? styles.fadeOut : styles.fadeIn}`}
+        className={`${styles.animWrapper} ${
+          isVisible && !isClosing ? styles.fadeIn : styles.fadeOut
+        }`}
       >
         {type === "video" ? (
           <video

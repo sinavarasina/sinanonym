@@ -26,14 +26,13 @@
 }
 
 .animWrapper {
+  opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
 
 .fadeIn {
   opacity: 1;
-  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
-
 .fadeOut {
   opacity: 0;
 }
@@ -51,13 +50,4 @@
 .bottom-right .media {
   max-width: 350px;
   display: block;
-}
-
-@keyframes popIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
