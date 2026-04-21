@@ -6,10 +6,11 @@ export const useCustNavigate = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const navigateTo = (targetPath: string) => {
+  const navigateTo = (targetPath: string, onSamePage?: () => void) => {
     if (location.pathname === targetPath) {
-      // the thing is still bout to do
-      console.log("atleast it works");
+      if (onSamePage) {
+        onSamePage();
+      }
       return;
     }
     navigate(targetPath);

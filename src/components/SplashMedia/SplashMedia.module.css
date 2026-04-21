@@ -1,0 +1,63 @@
+.positionWrapper {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.center {
+  top: 50%;
+  left: 50%;
+}
+.top-left {
+  top: 0;
+  left: 0;
+}
+.top-right {
+  top: 0;
+  right: 0;
+}
+.bottom-left {
+  bottom: 0;
+  left: 0;
+}
+.bottom-right {
+  bottom: 0;
+  right: 0;
+}
+
+.animWrapper {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.fadeIn {
+  opacity: 1;
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.fadeOut {
+  opacity: 0;
+}
+
+.center .media {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
+}
+
+.top-left .media,
+.top-right .media,
+.bottom-left .media,
+.bottom-right .media {
+  max-width: 350px;
+  display: block;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
