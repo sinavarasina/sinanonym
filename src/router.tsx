@@ -1,11 +1,12 @@
+import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import { appRoutes } from "./config/routes";
 import { Home } from "./pages/Home/Home";
 import { NotFound } from "./pages/NotFound/NotFound";
 import WIPAnimation from "./assets/videos/anone.webm";
 
-const PAGE_MAP: Record<string, React.ReactNode> = {
-  Home: <Home />,
+const PAGE_MAP: Record<string, React.FC> = {
+  Home,
 };
 
 const routerObjects = appRoutes.map((route) => {
@@ -22,9 +23,11 @@ const routerObjects = appRoutes.map((route) => {
     };
   }
 
+  const PageComponent = PAGE_MAP[route.pageKey];
+
   return {
     path: route.path,
-    element: PAGE_MAP[route.pageKey] ?? <NotFound />,
+    element: PageComponent ? <PageComponent /> : <NotFound />,
   };
 });
 
