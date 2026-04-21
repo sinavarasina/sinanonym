@@ -1,120 +1,123 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import styles from "./Home.module.css";
 import yuki from "../../assets/images/yuki-background-removed.png";
 import yukiGlassesOn from "../../assets/images/yuki-background-removed-glasses.png";
-
 import { useRNGYukiSFX } from "../../hooks/useRNGYukiSFX";
 import { useCustNavigate } from "../../hooks/useCustNavigate";
-import { SplashMedia } from "../../components/SplashMedia/SplashMedia";
-import { SPLASH_PRESETS } from "../../config/SplashPreset";
 import type { SplashConfig } from "../../types/SplashMedia";
-
-const MENU_ITEMS = [
-  { label: "/home", path: "/home" },
-  { label: "/gallery", path: "/gallery" },
-  { label: "/fun-things", path: "/fun-things" },
-  { label: "/about-me", path: "/about-me" },
-];
-
-const ROTATING_TEXT =
-  "< observing the resulting fluctuations in data > • 長門有希 •";
+import { SplashMedia } from "../../components/SplashMedia/SplashMedia";
+import { MENU_ITEMS } from "../../constants/navigation";
+import { SPLASH_PRESETS } from "../../config/splashPresets";
 
 export const Home = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [splashConfig, setSplashConfig] = useState<SplashConfig | null>(null);
+    const ROTATING_TEXT = "< observing the resulting fluctuations in data > • 長門有希 •";
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [splashConfig, setSplashConfig] = useState<SplashConfig | null>(null);
+    const { playRandomYukiSFX } = useRNGYukiSFX();
+    const { navigateTo } = useCustNavigate();
 
-  const { playRandomYukiSFX } = useRNGYukiSFX();
-  const { navigateTo } = useCustNavigate();
+    const handleSamePageClick = useCallback(() => {
+        setSplashConfig(SPLASH_PRESETS.samePageClick);
+    }, []);
 
-  const handleSamePageClick = () => {
-    setSplashConfig(SPLASH_PRESETS.samePageClick);
-  };
+    const handleNavigate = useCallback(
+        (path: string) => navigateTo(path, handleSamePageClick),
+        [navigateTo, handleSamePageClick],
+    );
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "h" || e.key === "ArrowLeft") {
-        setSelectedIndex((prev) =>
-          prev > 0 ? prev - 1 : MENU_ITEMS.length - 1,
-        );
-      } else if (e.key === "l" || e.key === "ArrowRight") {
-        setSelectedIndex((prev) =>
-          prev < MENU_ITEMS.length - 1 ? prev + 1 : 0,
-        );
-      } else if (e.key === "Enter") {
-        navigateTo(MENU_ITEMS[selectedIndex].path, handleSamePageClick);
-      }
-    };
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            const len = MENU_ITEMS.length;
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedIndex, navigateTo]);
+            if (e.key === "h" || e.key === "ArrowLeft") {
+                setSelectedIndex((prev) => (prev - 1 + len) % len);
+            } else if (e.key === "l" || e.key === "ArrowRight") {
+                setSelectedIndex((prev) => (prev + 1) % len);
+            } else if (e.key === "Enter") {
+                handleNavigate(MENU_ITEMS[selectedIndex].path);
+            }
+        };
 
-  return (
-    <main className={styles.hero}>
-      <SplashMedia
-        type={splashConfig?.type || null}
-        src={splashConfig?.src || ""}
-        position={splashConfig?.position}
-        scale={splashConfig?.scale}
-        offsetX={splashConfig?.offsetX}
-        offsetY={splashConfig?.offsetY}
-        onClose={() => setSplashConfig(null)}
-      />
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [selectedIndex, handleNavigate]);
 
-      <header className={styles.headerContainer}>
-        <div className={styles.avatarWrapper} onClick={playRandomYukiSFX}>
-          <svg viewBox="0 0 200 200" className={styles.textRing}>
-            <defs>
-              <path
-                id="circlePath"
-                d="M 100, 100 m -80, 0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0"
-              />
-            </defs>
-            <text className={styles.ringText}>
-              <textPath href="#circlePath" startOffset="0%">
-                {ROTATING_TEXT}
-              </textPath>
-            </text>
-          </svg>
+    return (
+        <main className={styles.hero}>
+            <SplashMedia
+                type={splashConfig?.type ?? null}
+                src={splashConfig?.src ?? ""}
+                position={splashConfig?.position}
+                scale={splashConfig?.scale}
+                onClose={() => setSplashConfig(null)}
+            />
 
-          <img src={yuki} alt="waifu base" className={styles.avatarBase} />
-          <img
-            src={yukiGlassesOn}
-            alt="waifu glasses"
-            className={styles.avatarHover}
-          />
-        </div>
+            <header className={styles.headerContainer}>
+                <div
+                    className={styles.avatarWrapper}
+                    onClick={playRandomYukiSFX}
+                    role="button"
+                    aria-label="Play Yuki sound effect"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === "Enter" && playRandomYukiSFX()}
+                >
+                    <svg
+                        viewBox="0 0 200 200"
+                        className={styles.textRing}
+                        aria-hidden="true"
+                    >
+                        <defs>
+                            <path
+                                id="circlePath"
+                                d="M 100, 100 m -80, 0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0"
+                            />
+                        </defs>
+                        <text className={styles.ringText}>
+                            <textPath href="#circlePath" startOffset="0%">
+                                {ROTATING_TEXT}
+                            </textPath>
+                        </text>
+                    </svg>
 
-        <h1 className={styles.title}>Sinanonym</h1>
-      </header>
+                    <img src={yuki} alt="Yuki Nagato" className={styles.avatarBase} />
+                    <img
+                        src={yukiGlassesOn}
+                        alt=""
+                        aria-hidden="true"
+                        className={styles.avatarHover}
+                    />
+                </div>
 
-      <section className={styles.bio}>
-        <p>
-          hey, i'm Varasina Farmadani, and i was trying to learn how to make
-          website (since i skip most of webdev tutorials).
-        </p>
-        <p> よろしくお願いします。</p>
-      </section>
+                <h1 className={styles.title}>Sinanonym</h1>
+            </header>
 
-      <section className={styles.terminal}>
-        <p>$ ls</p>
-        <div className={styles.menuContainer}>
-          <span>{">"}</span>
-          {MENU_ITEMS.map((item, index) => (
-            <button
-              key={item.path}
-              className={`${styles.menuItem} ${index === selectedIndex ? styles.active : ""}`}
-              onMouseEnter={() => setSelectedIndex(index)}
-              onPointerDown={() => {
-                navigateTo(item.path, handleSamePageClick);
-              }}
-              aria-current={index === selectedIndex ? "true" : undefined}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-      </section>
-    </main>
-  );
+            <section className={styles.bio} aria-label="Bio">
+                <p>
+                    hey, i'm Varasina Farmadani, and i was trying to learn how to make
+                    website (since i skip most of webdev tutorials).
+                </p>
+                <p>よろしくお願いします。</p>
+            </section>
+
+            <section className={styles.terminal} aria-label="Navigation terminal">
+                <p>$ ls</p>
+                <nav aria-label="Site navigation">
+                    <div className={styles.menuContainer}>
+                        <span aria-hidden="true">{">"}</span>
+                        {MENU_ITEMS.map((item, index) => (
+                            <button
+                                key={item.path}
+                                className={`${styles.menuItem} ${index === selectedIndex ? styles.active : ""}`}
+                                onMouseEnter={() => setSelectedIndex(index)}
+                                onPointerDown={() => handleNavigate(item.path)}
+                                aria-current={index === selectedIndex ? "page" : undefined}
+                            >
+                                {item.label}
+                            </button>
+                        ))}
+                    </div>
+                </nav>
+            </section>
+        </main>
+    );
 };
