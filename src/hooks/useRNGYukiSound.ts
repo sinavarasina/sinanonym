@@ -1,15 +1,15 @@
 import { useCallback } from "react";
 import { getRandomInt } from "../utils/math";
+import { YUKI_SFX } from "../constants/audio";
 
 export const useRNGYukiSFX = () => {
   const playRandomYukiSFX = useCallback(() => {
-    const audioDir = "/sounds/nagato-yuki";
-    const rng = getRandomInt(1, 831);
+    const rng = getRandomInt(YUKI_SFX.min, YUKI_SFX.max);
+    const src = `${YUKI_SFX.dir}/${YUKI_SFX.prefix}${rng}${YUKI_SFX.ext}`;
+    const audio = new Audio(src);
 
-    const audio = new Audio(`${audioDir}/tsuisou/yuki${rng}.aac`);
-
-    audio.play().catch((error) => {
-      console.error("audio playback failed:", error);
+    audio.play().catch((err) => {
+      console.error("audio playback failed:", err);
     });
   }, []);
 
