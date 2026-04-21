@@ -1,30 +1,33 @@
 // cust is custom
-
+import { useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export const useCustNavigate = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const navigateTo = (targetPath: string, onSamePage?: () => void) => {
-    if (location.pathname === targetPath) {
-      if (onSamePage) {
-        onSamePage();
+  const navigateTo = useCallback(
+    (targetPath: string, onSamePage?: () => void) => {
+      if (location.pathname === targetPath) {
+        onSamePage?.();
+        return;
       }
-      return;
-    }
-    navigate(targetPath);
-  };
+      navigate(targetPath);
+    },
+    [navigate, location.pathname],
+  );
 
-  const goBack = (fallbackPath: string = "/home") => {
-    const hasHistory = window.history.state && window.history.state.idx > 0;
-
-    if (hasHistory) {
-      navigate(-1);
-    } else {
-      navigate(fallbackPath, { replace: true });
-    }
-  };
+  const goBack = useCallback(
+    (fallbackPath = "/home") => {
+      const hasHistory = window.history.state && window.history.state.idx > 0;
+      if (hasHistory) {
+        navigate(-1);
+      } else {
+        navigate(fallbackPath, { replace: true });
+      }
+    },
+    [navigate],
+  );
 
   return { navigateTo, goBack };
 };
